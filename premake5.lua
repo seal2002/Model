@@ -99,9 +99,9 @@ function useOpenGLWindowLib()
 end
 
 -- The windowed app
-project "1.HelloWindow"
+project "ModelLoading"
 	kind "WindowedApp"
-	files "Projects/1.HelloWindow/**"
+	files "Projects/ModelLoading/**"
 
 	-- We also need the headers
 	includedirs "Projects/MainWindowLib"
