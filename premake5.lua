@@ -19,7 +19,7 @@ workspace "Model"
 	-- We now only set settings for the Debug configuration
 	filter { "configurations:Debug" }
 		-- We want debug symbols in our debug config
-		flags { "Symbols" }
+		symbols "On"
 	
 	-- We now only set settings for Release
 	filter { "configurations:Release" }
@@ -99,9 +99,9 @@ function useOpenGLWindowLib()
 end
 
 -- The windowed app
-project "1.HelloWindow"
+project "1.Model"
 	kind "WindowedApp"
-	files "Projects/1.HelloWindow/**"
+	files "Projects/1.Model/**"
 
 	-- We also need the headers
 	includedirs "Projects/MainWindowLib"
