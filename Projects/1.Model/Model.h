@@ -11,7 +11,7 @@ class Model
 {
 public:
 	/* Function */
-	Model(char* path);
+	Model(string path);
 	void Draw(Shader shader);
 	~Model();
 private:
