@@ -5,6 +5,7 @@ Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture
 	this->vertices = vertices;
 	this->indices = indices;
 	this->textures = textures;
+
 	setupMesh();
 }
 
@@ -31,7 +32,12 @@ void Mesh::setupMesh()
 	//vertex Textcords
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Texcoords));
-
+	// vertex tangent
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangent));
+	// vertex bitangent
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
 	glBindVertexArray(0);
 }
 
@@ -39,6 +45,8 @@ void Mesh::Draw(Shader shader)
 {
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
+	unsigned int normalNr = 1;
+	unsigned int heightNr = 1;
 	for (unsigned int i = 0; i < textures.size(); i++)
 	{
 		glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
@@ -54,6 +62,10 @@ void Mesh::Draw(Shader shader)
 		{
 			ss << specularNr++;
 		}
+		else if (name == "texture_normal")
+			ss << normalNr++; // transfer unsigned int to stream
+		else if (name == "texture_height")
+			ss << heightNr++; // transfer unsigned int to stream
 		number = ss.str();
 		shader.setFloat(("metarial." + name + number).c_str(), i);
 		glBindTexture(GL_TEXTURE_2D, textures[i].id);
@@ -64,6 +76,8 @@ void Mesh::Draw(Shader shader)
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
+
+	glActiveTexture(GL_TEXTURE0);
 }
 
 Mesh::~Mesh()

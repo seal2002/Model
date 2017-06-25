@@ -3,6 +3,7 @@
 #include <vector>
 #include "glm\glm.hpp"
 #include "common\Shader.h"
+#include "assimp\Importer.hpp"
 
 using namespace glm;
 using namespace std;
@@ -12,12 +13,15 @@ struct Vertex
 	vec3 Postition;
 	vec3 Normal;
 	vec2 Texcoords;
+	vec3 Tangent;
+	vec3 Bitangent;
 };
 
 struct Texture
 {
 	unsigned int id;
 	string type;
+	aiString path;
 };
 
 class Mesh

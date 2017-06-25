@@ -52,6 +52,16 @@ function linkGLFW()
 	filter {}
 end
 
+-- This function links statically against assimp
+function linkAssimp()
+	libdirs "Libraries/assimp/lib"
+	
+	-- Our static lib should not link against assimp
+	filter "kind:not StaticLib"
+		links "assimp"
+	filter {}
+end
+
 -- Our first project, the static library
 project "GLAD"
 	-- kind is used to indicate the type of this project.
@@ -79,6 +89,19 @@ project "OpenGLWindow"
 	includeGLFW()
 	includedirs "Libraries"
 
+-- Our third project, the static library
+project "STB_IMAGE"
+	-- kind is used to indicate the type of this project.
+	kind "StaticLib"
+	-- We specify where the source files are.
+	-- It would be better to separate header files in a folder and sources
+	-- in another, but for our simple project we will put everything in the same place.
+	-- Note: ** means recurse in subdirectories, so it will get all the files in ExampleLib/
+	files "Projects/STB_IMAGE/**"
+
+	-- We need GL, so we include it
+	includedirs "Libraries"
+
 function useGLADLib()
 	-- We link against a library that's in the same workspace, so we can just
 	-- use the project name - premake is really smart and will handle everything for us.
@@ -100,15 +123,17 @@ end
 
 -- The windowed app
 project "1.Model"
-	kind "WindowedApp"
+	kind "ConsoleApp"
 	files "Projects/1.Model/**"
 
 	-- We also need the headers
 	includedirs "Projects/MainWindowLib"
 	includedirs "Libraries"
+	includedirs "Libraries/assimp"
 
 	useOpenGLWindowLib()
-
+	linkAssimp()
+	links "STB_IMAGE"
 	-- Now we need to add the OpenGL system libraries
 	
 	filter { "system:windows" }
