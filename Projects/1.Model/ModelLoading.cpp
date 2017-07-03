@@ -19,7 +19,7 @@ int main()
 	Shader ourShader("..\\Resource\\1.model_loading.vs", "..\\Resource\\1.model_loading.fs");
 	// load models
 	// -----------
-	Model ourModel("..\\Resource\\nanosuit\\nanosuit.obj");
+	Model ourModel("..\\Resource\\Ozelot\\Ozelot.obj");
 
 	while (!window.shouldClose())
 	{
