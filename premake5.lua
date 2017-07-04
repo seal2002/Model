@@ -58,7 +58,7 @@ function linkAssimp()
 
 	-- Our static lib should not link against assimp
 	filter "kind:not StaticLib"
-		links "assimp"
+		links "assimp-vc140-mt"
 	filter {}
 end
 
