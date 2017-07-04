@@ -9,6 +9,7 @@
 #include <vector>
 #include <iostream>
 
+#define CAMERA_OUTPUT 0
 // Defines several possible options for camera movement
 
 enum Camera_Movement
@@ -81,7 +82,11 @@ private:
 		front.y = sin(glm::radians(pitch));
 		front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
 		cameraFront = glm::normalize(front);
+	#if CAMERA_OUTPUT
 		std::cout << "yaw:" << yaw << " pitch:" << pitch << " x:" << cameraFront.x << " y:" << cameraFront.y << " z:" << cameraFront.z << std::endl;
+	#endif // 0
+
+		
 	}
 };
 

@@ -2,13 +2,15 @@
 #include <glm\glm.hpp>
 #include <glm\common.hpp>
 #include <glm\gtc\matrix_transform.hpp>
+#include <GLFW\include\GLFW\glfw3.h>
 #include "common\Shader.h"
 #include "common\Camera.h"
 #include "Model.h"
 
 using namespace OpenGLWindow;
-
+void do_movement();
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+bool* keys;
 
 int main()
 {
@@ -19,16 +21,16 @@ int main()
 	Shader ourShader("..\\Resource\\1.model_loading.vs", "..\\Resource\\1.model_loading.fs");
 	// load models
 	// -----------
-	Model ourModel("..\\Resource\\Ozelot\\Ozelot.obj");
+	Model ourModel("..\\Resource\\nanosuit\\nanosuit.obj");
 
 	while (!window.shouldClose())
 	{
-		window.processInput();
-		window.pollEvents();
+		keys = window.getKeyPress();
+		do_movement();
 		// render
 		// ------
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// don't forget to enable shader before setting uniforms
 		ourShader.Use();
@@ -47,7 +49,44 @@ int main()
 		ourModel.Draw(ourShader);
 
 		window.swapBuffers();
+		window.pollEvents();
 	}
 
 	return 0;
+}
+
+void do_movement()
+{
+	if (keys[GLFW_KEY_W])
+	{
+		camera.ProcessKeyboard(Camera_Movement::FORWARD);
+	}
+	if (keys[GLFW_KEY_S])
+	{
+		camera.ProcessKeyboard(Camera_Movement::BACKWARD);
+	}
+	if (keys[GLFW_KEY_A])
+	{
+		camera.ProcessKeyboard(Camera_Movement::LEFT);
+	}
+	if (keys[GLFW_KEY_D])
+	{
+		camera.ProcessKeyboard(Camera_Movement::RIGHT);
+	}
+	if (keys[GLFW_KEY_LEFT])
+	{
+		camera.ProcessKeyboard(Camera_Movement::ROTATE_LEFT);
+	}
+	if (keys[GLFW_KEY_RIGHT])
+	{
+		camera.ProcessKeyboard(Camera_Movement::ROTATE_RIGHT);
+	}
+	if (keys[GLFW_KEY_UP])
+	{
+		camera.ProcessKeyboard(Camera_Movement::ROTATE_UP);
+	}
+	if (keys[GLFW_KEY_DOWN])
+	{
+		camera.ProcessKeyboard(Camera_Movement::ROTATE_DOWN);
+	}
 }
