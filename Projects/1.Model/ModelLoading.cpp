@@ -16,6 +16,10 @@ int main()
 {
 	Window window{800, 600, "Hello Window!"};
 
+	// configure global opengl state
+	// -----------------------------
+	glEnable(GL_DEPTH_TEST);
+
 	// build and compile shaders
 	// -------------------------
 	Shader ourShader("..\\Resource\\1.model_loading.vs", "..\\Resource\\1.model_loading.fs");
