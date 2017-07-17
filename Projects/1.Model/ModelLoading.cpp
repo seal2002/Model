@@ -22,7 +22,7 @@ int main()
 	// load models
 	// -----------
 	Model ourModel("..\\Resource\\nanosuit\\nanosuit.obj");
-
+	glEnable(GL_DEPTH_TEST);
 	while (!window.shouldClose())
 	{
 		keys = window.getKeyPress();
